@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+Eartraining Clock
+</title>
+
+<style> 
+canvas { 
+/* border: 1px solid black; */
+  font-weight: 900;
+  background-color: #ffffff;
+}
+</style>
+<script type="text/javascript" src="http://www.guitarland.com/javascripts/Tone.js"></script>
+<script type="text/javascript" src="http://www.guitarland.com/javascripts/StartAudioContext.js"></script>
+<script src="https://unpkg.com/vue"></script> 
+
+	<script type="text/javascript">
+/*---------------------------------------
+	//create an audio context
+	window.AudioContext = window.AudioContext || window.webkitAudioContext
+	var audioContext = new AudioContext()
+	//set the context
+//	StartAudioContext(audioContext, ".starterButton").then(function(){
+//		document.querySelector("#isStarted").textContent = "Started"
+//	})
+//-------------------------------------------*/
+
+	</script>
+<!--
+<script src="https://unpkg.com/unmute" data-add-button="true"></script>
+-->
+
+</head>
+<body>
+
+
+<canvas id="clockCanvas" width="200" height="200">
+</canvas>
+<div id="alarmDiv"></div>
+<div id="alarmButtons"></div>
+<div id="on_off_checkboxes"></div>
+<div id="alarmDetailsDiv"></div>
+<div id="alarmCountdownDiv"></div>
+
+
+<script src="canvasClock.js"></script>
+
+
+
+</body>
+</html>
