@@ -30,5 +30,5 @@ The following intervals are played during the hour
 During the hour as the clock chimes the 5 minute interval, the eartraining exercise is to determine the time by recogizing the interval size.  If you hear a Perfect 4th (which has 5 half steps) you should conclude that minute hand is pointing towards '5', therefore it is 25 minutes after the hour.  Check your eartraining accuracy by looking at the clock.
 
 The [Tone.js library](https://github.com/Tonejs/Tone.js) is used for the sound creation.  
-The javascript code is canvasClock.js
+The javascript code is canvasClock.js  
 The html page is Clock.html
