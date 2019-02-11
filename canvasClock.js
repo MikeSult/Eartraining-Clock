@@ -78,6 +78,7 @@ function drawNumbers(ctx, radius) {
 }
 
 function drawTime(ctx, radius){
+//    var now = new Date(debugDates[debugIndex]);
     var now = new Date();
     var hour = now.getHours();
     var minute = now.getMinutes();
@@ -123,6 +124,7 @@ var lastFiveMinutes = 0;
 var ticksSinceChime = 0;
 var safeDelayTime = 30; // seconds after chimes when stopIt() is called.
 var isStopped = true;
+var firstNoteMidiArray = [54,60,56,64,65,62,55,61,59,63,57,58];
 var firstNoteMidi = 60;
 var newNoteMidi = 60;
 var notes = ["C4"];
@@ -131,6 +133,11 @@ var alarmMinute = null;
 var alarmAmPm = null;
 var alarmTimeDisplayON = false;
 var alarmDate = null;
+var debugIndex = 2;
+var debugDates = ["October 13, 2014 11:00:00","October 13, 2014 11:05:00","October 13, 2014 11:10:00",
+                  "October 13, 2014 11:15:00","October 13, 2014 11:20:00","October 13, 2014 11:25:00",
+                  "October 13, 2014 11:30:00","October 13, 2014 11:35:00","October 13, 2014 11:40:00",
+                  "October 13, 2014 11:45:00","October 13, 2014 11:50:00","October 13, 2014 11:55:00"];
 
 
 //the synth ---------------------------
@@ -168,7 +175,7 @@ var reverb = new Tone.Freeverb(0.9, 4000)
 //-------------------------------------------*/
 
 function createClockSynth() {
-    console.log('createClockSynth()')
+//    console.log('createClockSynth()')
     clockSynth = new Tone.PolySynth(4, Tone.Synth).toMaster().set("envelope.attack", 0.04);
     chorusSend = clockSynth.send("chorus", -10);
     chebySend = clockSynth.send("cheby", -21);
@@ -180,7 +187,7 @@ function createClockSynth() {
 }
 
 function disposeClockSynth() {
-    console.log('disposeClockSynth()')
+//    console.log('disposeClockSynth()')
 	if (clockSynth){
 		clockSynth.dispose();
 		clockSynth = null;
@@ -244,6 +251,7 @@ MIDI_NUM_NAMES = ["C_1", "C#_1", "D_1", "D#_1", "E_1", "F_1", "F#_1", "G_1", "G#
                 
 
 function drawDigitalTime(ctx, radius) {
+//    var now = new Date(debugDates[debugIndex]);
     var now = new Date();
     var hour = now.getHours();
     var minute = now.getMinutes();
@@ -357,8 +365,15 @@ function drawDigitalTime(ctx, radius) {
         safeDelayTime = 10;
         lastFiveMinutes = Math.floor(minute/5);
         var offset = lastFiveMinutes;
+        // get a new first note from firstNoteMidiArray[] every 5 minutes 
+        // and each hour start the array at a different place
+        firstNoteMidi = firstNoteMidiArray[(offset + hour) % firstNoteMidiArray.length];    
+
         offset = offset == 0 ? 12 : offset;
-            
+        // if a descending interval make offset negative
+        offset = (offset % 2)? offset*-1 : offset;
+        offset = (hour % 2)? offset*-1 : offset;
+        firstNoteMidi = (offset < -5)? firstNoteMidi+12 : firstNoteMidi;
         newNoteMidi = firstNoteMidi + offset;
         var newTone = MIDI_NUM_NAMES[newNoteMidi];
         notes = [];
@@ -372,8 +387,8 @@ function drawDigitalTime(ctx, radius) {
                 msg+=",";
             msg += notes[i];
         }
+        msg += "\n"+now;
 //        console.log(msg);
-//        console.log("firstNoteMidi="+firstNoteMidi+" newNoteMidi="+newNoteMidi+"\nnotes="+notes[0]+","+notes[1]);
         ticksSinceChime = 0;
         playInterval(notes);
 //        console.log("time = "+timeString+":"+second+"\nisStopped="+isStopped);        
@@ -410,7 +425,7 @@ function playInterval(notes) {
 }
 
 function stopIt(){
-    console.log("stopIt()");    
+//    console.log("stopIt()");    
     Tone.Transport.stop();
     Tone.Transport.cancel(0);
     if (clockSynth){
@@ -694,7 +709,7 @@ function setAlarmTime() {
     alarmHour = hourMenu.options[hourMenu.selectedIndex].value;
     alarmMinute = minuteMenu.options[minuteMenu.selectedIndex].value;
     alarmAmPm = AmPmMenu.options[AmPmMenu.selectedIndex].value;
-    console.log("alarmHour="+alarmHour+" alarmMinute="+alarmMinute+" alarmAmPm="+alarmAmPm);
+//    console.log("alarmHour="+alarmHour+" alarmMinute="+alarmMinute+" alarmAmPm="+alarmAmPm);
     var alarmDetailsDiv = document.getElementById("alarmDetailsDiv");
     alarmDetailsDiv.innerHTML = '<p>Alarm is set for '+alarmHour+':'+alarmMinute+' '+alarmAmPm+'</p>';
     alarmTimeDisplayON = true;
