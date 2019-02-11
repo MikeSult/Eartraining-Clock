@@ -413,7 +413,7 @@ function playInterval(notes) {
         measureStamp = "1:"+(i);
         intervalNotes.push([measureStamp, notes[i]]);
     }
-    console.log(intervalNotes);
+//    console.log(intervalNotes);
     createClockSynth();
 	var interval = new Tone.Part(function(time, chord){
 		clockSynth.triggerAttackRelease(chord, "4n", time);
@@ -709,7 +709,7 @@ function setAlarmTime() {
     alarmHour = hourMenu.options[hourMenu.selectedIndex].value;
     alarmMinute = minuteMenu.options[minuteMenu.selectedIndex].value;
     alarmAmPm = AmPmMenu.options[AmPmMenu.selectedIndex].value;
-    console.log("alarmHour="+alarmHour+" alarmMinute="+alarmMinute+" alarmAmPm="+alarmAmPm);
+//    console.log("alarmHour="+alarmHour+" alarmMinute="+alarmMinute+" alarmAmPm="+alarmAmPm);
     var alarmDetailsDiv = document.getElementById("alarmDetailsDiv");
     alarmDetailsDiv.innerHTML = '<p>Alarm is set for '+alarmHour+':'+alarmMinute+' '+alarmAmPm+'</p>';
     alarmTimeDisplayON = true;
